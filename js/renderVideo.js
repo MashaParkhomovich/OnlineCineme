@@ -1,4 +1,5 @@
 import { getTriends } from "./services.js";
+import renderCard from "./renderCard.js";
 
 const filmWeek = document.querySelector('.film-week');
 
@@ -12,13 +13,17 @@ const firstRender = data =>{
       <h2 class="film-week__title">${data.title || data.name}</h2>
       <a class="film-week__watch-trailer tube" href="https://youtu.be/V0hagz_8L3M" aria-label="смотреть трейлер"></a>
     </div>
-  `;
+  `; 
 };
 
 
 const renderVideo = async () => {
   const data = await getTriends();
-  firstRender(data.results[0]);  
+
+  const [firstCard, ...otherCard] = data.results;
+  otherCard.length = 16;
+  firstRender(firstCard);  
+  renderCard(otherCard);
 };
 
 export default renderVideo;
